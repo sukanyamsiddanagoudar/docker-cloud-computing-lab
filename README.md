@@ -1,382 +1,115 @@
-\# Docker Cloud Computing Lab
+# Docker Cloud Computing Lab
 
+This repository contains Docker experiments and hands-on practical work completed as part of the Cloud Computing Laboratory.
 
+The work demonstrates Docker application containerization, running multiple containers from the same image, and communication between containers using a custom Docker network.
 
-This repository contains Docker-based experiments and hands-on practical work completed as part of the Cloud Computing Laboratory.
+## Experiments
 
+| No. | Experiment                                  | Main Concept                         | Status    |
+| --- | ------------------------------------------- | ------------------------------------ | --------- |
+| 1   | Docker Python Application                   | Application containerization         | Completed |
+| 2   | Run the Same Docker Image as Two Containers | Multiple containers from one image   | Completed |
+| 3   | Docker Container Networking                 | Container-to-container communication | Completed |
 
+## 1. Docker Python Application
 
-The work demonstrates the complete Docker workflow starting from containerizing a Python application, running multiple containers from the same image, and enabling communication between containers through a custom Docker network.
-
-
-
-\## Experiments
-
-
-
-| No. | Experiment                                  | Main Concept                                  | Status    |
-
-| --- | ------------------------------------------- | --------------------------------------------- | --------- |
-
-| 1   | Docker Python Application                   | Docker image creation and container execution | Completed |
-
-| 2   | Run the Same Docker Image as Two Containers | Multiple containers from one image            | Completed |
-
-| 3   | Docker Container Networking                 | Container-to-container communication          | Completed |
-
-
-
-\---
-
-
-
-\## 01 — Docker Python Application
-
-
-
-A simple Python Flask application was containerized using Docker.
-
-
+A Python Flask application was developed and containerized using Docker.
 
 The experiment covers:
 
+* Creating a Python Flask application
+* Creating a `requirements.txt` file
+* Creating a `Dockerfile`
+* Building a Docker image
+* Running the application inside a Docker container
+* Accessing the application through a web browser
+* Viewing container logs
+* Stopping and removing the container
 
+**Folder:** [01-Docker-Python-App](./01-Docker-Python-App/)
 
-\* Creating a Python Flask application
+## 2. Run the Same Docker Image as Two Containers
 
-\* Creating `requirements.txt`
+The existing `my-python-app` image was used to create two independent containers and run them at the same time.
 
-\* Creating a Dockerfile
+| Container         | Host Port | Container Port |
+| ----------------- | --------: | -------------: |
+| `app-container-1` |      5001 |           5000 |
+| `app-container-2` |      5002 |           5000 |
 
-\* Building a Docker image
+This experiment demonstrates that the same Docker image can be used to create multiple independent containers.
 
-\* Running a Docker container
+**Folder:** [02-Same-Image-Two-Containers](./02-Same-Image-Two-Containers/)
 
-\* Accessing the application through a browser
+## 3. Docker Container Networking
 
-\* Checking container logs
-
-\* Stopping and removing the container
-
-
-
-Folder:
-
-
-
-```text
-
-01-Docker-Python-App/
-
-```
-
-
-
-\---
-
-
-
-\## 02 — Run the Same Docker Image as Two Containers
-
-
-
-The existing `my-python-app` image was reused to run two independent containers simultaneously.
-
-
+A custom Docker network was created and two containers were connected to the same network.
 
 ```text
-
-my-python-app
-
-&#x20;   ├── app-container-1 → localhost:5001
-
-&#x20;   └── app-container-2 → localhost:5002
-
-```
-
-
-
-This demonstrates that a single Docker image can be used to create multiple independent containers.
-
-
-
-Folder:
-
-
-
-```text
-
-02-Same-Image-Two-Containers/
-
-```
-
-
-
-\---
-
-
-
-\## 03 — Docker Container Networking
-
-
-
-A user-defined Docker network was created and two containers were connected to the same network.
-
-
-
-The containers communicated using the Docker container name:
-
-
-
-```text
-
 network-container-1
-
-&#x20;       │
-
-&#x20;       │ app-network
-
-&#x20;       ▼
-
+        |
+        | app-network
+        |
+        v
 network-container-2
-
 ```
 
-
-
-This demonstrates Docker's internal container-to-container communication.
-
-
-
-Folder:
-
-
+Communication between the containers was tested using the container name:
 
 ```text
-
-03-Docker-Networking/
-
+http://network-container-2:5000
 ```
 
-
-
-\---
-
-
-
-\## Common Docker Commands
-
-
-
-\### Check Docker version
-
-
-
-```powershell
-
-docker --version
-
-```
-
-
-
-\*\*Why:\*\* Verifies that Docker is installed and accessible from the terminal.
-
-
-
-\### List images
-
-
-
-```powershell
-
-docker images
-
-```
-
-
-
-\*\*Why:\*\* Displays the Docker images available locally.
-
-
-
-\### List running containers
-
-
-
-```powershell
-
-docker ps
-
-```
-
-
-
-\*\*Why:\*\* Shows currently running containers.
-
-
-
-\### List all containers
-
-
-
-```powershell
-
-docker ps -a
-
-```
-
-
-
-\*\*Why:\*\* Shows both running and stopped containers.
-
-
-
-\### View container logs
-
-
-
-```powershell
-
-docker logs <container-name>
-
-```
-
-
-
-\*\*Why:\*\* Displays the output generated by the application running inside the container.
-
-
-
-\### Stop a container
-
-
-
-```powershell
-
-docker stop <container-name>
-
-```
-
-
-
-\*\*Why:\*\* Stops a running container without deleting it.
-
-
-
-\### Remove a container
-
-
-
-```powershell
-
-docker rm <container-name>
-
-```
-
-
-
-\*\*Why:\*\* Removes a stopped container.
-
-
-
-\### Create a Docker network
-
-
-
-```powershell
-
-docker network create app-network
-
-```
-
-
-
-\*\*Why:\*\* Creates a user-defined network that allows connected containers to communicate.
-
-
-
-\### Inspect a Docker network
-
-
-
-```powershell
-
-docker network inspect app-network
-
-```
-
-
-
-\*\*Why:\*\* Displays the configuration and connected containers of the network.
-
-
-
-\---
-
-
-
-\## Repository Structure
-
-
+This demonstrates container-to-container communication through a user-defined Docker network.
+
+**Folder:** [03-Docker-Networking](./03-Docker-Networking/)
+
+## Common Docker Commands
+
+| Command                                 | Purpose                                                 |
+| --------------------------------------- | ------------------------------------------------------- |
+| `docker --version`                      | Checks whether Docker is installed and available        |
+| `docker images`                         | Lists the Docker images available locally               |
+| `docker ps`                             | Displays currently running containers                   |
+| `docker ps -a`                          | Displays all containers, including stopped containers   |
+| `docker logs <container-name>`          | Displays the logs of a container                        |
+| `docker stop <container-name>`          | Stops a running container                               |
+| `docker rm <container-name>`            | Removes a stopped container                             |
+| `docker network create <network-name>`  | Creates a user-defined Docker network                   |
+| `docker network ls`                     | Lists Docker networks                                   |
+| `docker network inspect <network-name>` | Displays network configuration and connected containers |
+
+## Repository Structure
 
 ```text
-
 Docker-Cloud-Computing-Lab/
-
 │
-
 ├── README.md
-
 │
-
 ├── 01-Docker-Python-App/
-
 │   ├── README.md
-
 │   ├── app.py
-
 │   ├── Dockerfile
-
 │   ├── requirements.txt
-
 │   └── screenshots/
-
 │
-
 ├── 02-Same-Image-Two-Containers/
-
 │   ├── README.md
-
 │   └── screenshots/
-
 │
-
 └── 03-Docker-Networking/
-
-&#x20;   ├── README.md
-
-&#x20;   └── screenshots/
-
+    ├── README.md
+    └── screenshots/
 ```
 
+## Technologies Used
 
-
-\## Technologies
-
-
-
-\* Docker
-
-\* Docker Desktop
-
-\* Python
-
-\* Flask
-
-\* Docker Networking
-
-\* PowerShell
-
-
-
+| Technology        | Purpose                                   |
+| ----------------- | ----------------------------------------- |
+| Docker            | Containerization and container management |
+| Docker Desktop    | Local Docker environment                  |
+| Python            | Application development                   |
+| Flask             | Web application framework                 |
+| Docker Networking | Communication between containers          |
+| PowerShell        | Command-line interaction with Docker      |
